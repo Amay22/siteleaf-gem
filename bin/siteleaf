@@ -291,8 +291,10 @@ when 'pull'
       else
         puts "Site not configured, run `siteleaf config yoursite.com`.\n"
       end
+    else
+      puts "`#{ARGV[0]}` command not found.\n"
     end
-  case ARGV[1]
+  end
   when 'pages'
     if auth != false
       if site_id = get_site_id
@@ -300,9 +302,9 @@ when 'pull'
       else
         puts "Site not configured, run `siteleaf config yoursite.com`.\n"
       end
+    else
+      puts "`#{ARGV[0]}` command not found.\n"
     end
-  else
-    puts "`#{ARGV[0]}` command not found.\n"
   end
 when 'push'
   case ARGV[1]
