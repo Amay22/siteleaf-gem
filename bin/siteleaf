@@ -111,6 +111,29 @@ def get_theme_assets(site_id)
   end
 end
 
+def get_pages(site_id)
+  if pages = Siteleaf::Site.pages_by_site_id(site_id)
+    updated_count = 0
+    pages.each do |asset|
+      if File.exist?(pages.title) && (pages.checksum == Digest::MD5.hexdigest(File.read(pages.title)))
+        # file is up to date
+      else
+        print "Downloading #{pages.title}..."
+        #file = open(asset.file['url'], /^1\.8/.match(RUBY_VERSION) ? 'r' : 'r:UTF-8') { |f| f.read }
+        FileUtils.mkdir_p(File.dirname(pages.title))
+        #File.open(asset.filename, /^1\.8/.match(RUBY_VERSION) ? 'w' : 'w:UTF-8') { |f| f.write(file) }
+        updated_count += 1
+        #print "complete.\n"
+      end
+    end
+    puts "=> #{updated_count} asset(s) downloaded.\n"
+  end
+end
+
+
+
+
+
 def put_theme_assets(site_id, prompts)
   theme = Siteleaf::Theme.find_by_site_id(site_id)
   assets = theme.assets
@@ -265,6 +288,19 @@ when 'pull'
     if auth != false
       if site_id = get_site_id
         get_theme_assets(site_id)
+      else
+        puts "Site not configured, run `siteleaf config yoursite.com`.\n"
+      end
+    end
+  else
+    puts "`#{ARGV[0]}` command not found.\n"
+  end
+when 'pull'
+  case ARGV[1]
+  when 'pages'
+    if auth != false
+      if site_id = get_site_id
+        get_pages(site_id)
       else
         puts "Site not configured, run `siteleaf config yoursite.com`.\n"
       end
