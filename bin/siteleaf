@@ -292,10 +292,6 @@ when 'pull'
         puts "Site not configured, run `siteleaf config yoursite.com`.\n"
       end
     end
-  else
-    puts "`#{ARGV[0]}` command not found.\n"
-  end
-when 'pull'
   case ARGV[1]
   when 'pages'
     if auth != false
