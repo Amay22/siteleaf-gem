@@ -294,7 +294,6 @@ when 'pull'
     else
       puts "`#{ARGV[0]}` command not found.\n"
     end
-  end
   when 'pages'
     if auth != false
       if site_id = get_site_id
@@ -305,7 +304,6 @@ when 'pull'
     else
       puts "`#{ARGV[0]}` command not found.\n"
     end
-  end
 when 'push'
   case ARGV[1]
   when 'theme'
